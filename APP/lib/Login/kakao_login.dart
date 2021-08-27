@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:kakao_flutter_sdk/auth.dart';
 import 'package:kakao_flutter_sdk/user.dart';
 import 'package:ai_project/MemberInfo/input_info.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class KakaoLogin extends StatefulWidget {    //로그인 기능 & ui
   const KakaoLogin({Key? key}) : super(key: key);
@@ -15,6 +17,7 @@ class KakaoLogin extends StatefulWidget {    //로그인 기능 & ui
 
 class _KakaoLoginState extends State<KakaoLogin> {
   static const storage = FlutterSecureStorage();
+  String userName = "";
 
   @override
   void initState() {
@@ -53,16 +56,19 @@ class _KakaoLoginState extends State<KakaoLogin> {
       print(e);
     }
   }
-  late String id;
+  late String name;
   _getUserId() async {
     User user = await UserApi.instance.me();
     setState(() {
-      id = user.kakaoAccount.profile.toJson()['nickname'];
+      name = user.kakaoAccount?.profile?.toJson()['nickname'];
     });
+    print('이름: '+ name);
+    return name;
   }
 
   _getUserEmail() async {
     User user = await UserApi.instance.me();
+    print('이메일 주소: ' + user.kakaoAccount!.email.toString());
     return user.kakaoAccount!.email.toString();
   }
 
@@ -82,12 +88,25 @@ class _KakaoLoginState extends State<KakaoLogin> {
   _issueAccessToken(String authCode) async {
     try {
       var token = await AuthApi.instance.issueAccessToken(authCode);
+      //var email = 
       AccessTokenStore.instance.toStore(token);
-      print(token.toString());
+      //print(token.toString());
       await _getUserInfo();
-      var userId = await _getUserId();
-      // var userEmail = await _getUserEmail();
-      await storage.write(key: 'login', value: userId); 
+      var userName = await _getUserId();
+      var userEmail = await _getUserEmail();
+      await storage.write(key: 'userName', value: userName); 
+      print(userName);
+      print(userEmail);
+
+      //post request
+
+      //url to send the post request to 
+      final url = 'http://10.0.2.2:5000/user';
+      
+      print(url);
+      //sending a post request to the url
+      final response = await http.post(Uri.parse(url), body: json.encode({'userName': userName}));   
+      print(response);
 
       Navigator.pushReplacement(
         context,

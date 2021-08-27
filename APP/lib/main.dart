@@ -77,7 +77,7 @@ class _StartPageState extends State<StartPage> {
   // 기기에 저장된 로그인 정보 불러오기
   loadUserLogin() async {
     // login key값에 저장된 값 불러오기
-    userInfo = (await storage.read(key: 'login'))!;
+    userInfo = (await storage.read(key: 'login'))!;       //자꾸 null check 뭐시기 에러 발생, 디버그 없이 실행하면 됨
     print(userInfo);
 
     // 로그인한 값이 저장됐으면 SubMain 페이지로 이동
