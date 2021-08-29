@@ -55,6 +55,33 @@ class CalendarPageState extends State<CalendarPage> {
 
   }
 
+
+void showAlertDialog(BuildContext context) async {
+    String result = await showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Alert'),
+          content: Text("일주일 이내의 범위로 선택해주세요"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                //리스트 초기화
+                
+                Navigator.pop(context, "OK");
+                daysList.clear();
+                print(daysList);
+                strTypeDaysList.clear();
+                print(strTypeDaysList);
+              },
+            ),
+          ],
+        );
+      },
+    );
+}
   
   //static List<DateTime> days = [];
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
@@ -62,16 +89,20 @@ class CalendarPageState extends State<CalendarPage> {
       setState(() {
         if (args.value.endDate==null){  //첫번째 날짜 눌렀을때
 
-            if(strTypeDaysList.length == 0){
+            if(strTypeDaysList.length == 0){  //날짜 스트링 리스트가 비어있을 때
               startDate=DateFormat('M/d').format(args.value.startDate).toString();
               print(startDate);
-              } else if(strTypeDaysList.length != 0){
-              strTypeDaysList.clear();
+              } else if(strTypeDaysList.length != 0){  //날짜 스트링 리스트가 비어있지 않을 때
+              strTypeDaysList.clear();   //리스트 초기화
               startDate=DateFormat('M/d').format(args.value.startDate).toString();
               print(startDate);
               }
           
         } else if(args.value.endDate!=null){  //두번째 날짜 눌렀을때
+            if(args.value.endDate.difference(args.value.startDate).inDays >= 7){   //만약 선택 날짜들 차이가 7이상이면 에러창 띄우기
+              //에러 창 띄움
+              showAlertDialog(context);
+            }
             getDaysInBeteween(args.value.startDate, args.value.endDate);
             endDate=DateFormat('M/d').format(args.value.endDate).toString();
             print(endDate);
@@ -115,6 +146,8 @@ class CalendarPageState extends State<CalendarPage> {
     
 //   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -144,12 +177,11 @@ class CalendarPageState extends State<CalendarPage> {
 
 
   change2GraphPage() {
-    Navigator.pushReplacement(context,
+    Navigator.pushAndRemoveUntil(context,
       MaterialPageRoute(
-          builder: (context) => SubMain2()    //이미지가 선택됐을때 이동, submain2 지우고 submain에서 해결해야해
+          builder: (BuildContext context) => SubMain2()    //이미지가 선택됐을때 이동, submain2 지우고 submain에서 해결해야해
       
-      ),
-    );
+      ), (route) => false);
   }
 
 }

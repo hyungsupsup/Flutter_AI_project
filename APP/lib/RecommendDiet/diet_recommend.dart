@@ -63,10 +63,17 @@ class _DietRecommendState extends State<DietRecommend> {
 
                     ),
                     SizedBox(
-              width: 80.0,
+              width: 120.0,
             ),
-                    Text(                       //이전에 등록한 식사에 따라 달라짐
-                      '저녁 추천'   
+                    Container(
+                      margin: const EdgeInsets.all(15.0),
+                   padding: const EdgeInsets.all(3.0),
+                   decoration: BoxDecoration(
+                   border: Border.all(color: Colors.black)
+                   ),
+                      child: Text(                       //이전에 등록한 식사에 따라 달라짐
+                        '저녁 추천'   
+                      ),
                     )
                   ],
                   ),
@@ -77,7 +84,7 @@ class _DietRecommendState extends State<DietRecommend> {
             Column(               //섭취량 정보 텍스트,  2번째 위에 있는 column박스
               children: [
                 SizedBox(
-              height: 50.0,
+              height: 30.0,
             ),
                 Text(
                   '단백질 섭취량이 목표치보다 40% 부족하네요!'
@@ -86,69 +93,187 @@ class _DietRecommendState extends State<DietRecommend> {
                   '저녁에는 이런 음식들 어떠세요?'
                   ),
                 SizedBox(
-              height: 100.0,
+              height: 50.0,
             ),
 
               ],
             ),
 
-            Row(     
+            Column(     
               mainAxisAlignment: MainAxisAlignment.center,          //추천 음식 사진 3개 출력,  3번째 위에 있는 row박스
               children: [
                 
-                Column(               //첫번째 사진과 그 아래 영양 정보 있는 박스
-                  children: [
-                    Text(
-                  '불고기'
+                Container(
+                   margin: const EdgeInsets.all(15.0),
+                   padding: const EdgeInsets.all(3.0),
+                   decoration: BoxDecoration(
+                   border: Border.all(color: Colors.blueAccent)
+                   ),
+
+                  child: Row(               //첫번째 사진과 그 아래 영양 정보 있는 박스
+                    children: [
+                      Flexible(
+                        child: Text(
+                    '불고기fgagfadgadfgadg'
+                  ),
+                      ),
+                  SizedBox(
+              width: 50.0,
+            ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          '칼로리: 1000kcal'
+                        ),
+                        Text(
+                          '탄수화물: 200g'
+                        ),
+                        Text(
+                          '단백질: 150g'
+                        ),
+                        Text(
+                          '지방: 324g'
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+              width: 50.0,
+            ),
+                  Container(
+                    child: IconButton(
+                      onPressed: () {
+                        print("liked");
+                      },
+                      icon: Icon(Icons.favorite),
+                      color: Colors.red,           
+                      iconSize: 20.0,
+
+                    ),
+                  ),
+
+                    ],
+                    
+                  ),
                 ),
                 SizedBox(
-              height: 50.0,
+              height: 40.0,
             ),
-                Text(
-                  '영양정보'
-                ),
 
-                  ],
-                  
+                Container(
+                   margin: const EdgeInsets.all(15.0),
+                   padding: const EdgeInsets.all(3.0),
+                   decoration: BoxDecoration(
+                   border: Border.all(color: Colors.blueAccent)
+                   ),
+
+                  child: Row(               //첫번째 사진과 그 아래 영양 정보 있는 박스
+                    children: [
+                      Flexible(
+                        child: Text(
+                    '탕수육ㅎㄷㅈㄹㄻㄱㅎㅇ로오논론로'
+                  ),
+                      ),
+                  SizedBox(
+              width: 50.0,
+            ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          '칼로리: 1000kcal'
+                        ),
+                        Text(
+                          '탄수화물: 200g'
+                        ),
+                        Text(
+                          '단백질: 150g'
+                        ),
+                        Text(
+                          '지방: 324g'
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+              width: 50.0,
+            ),
+                  Container(
+                    child: IconButton(
+                      onPressed: () {
+                        print("liked");
+                      },
+                      icon: Icon(Icons.favorite),
+                      color: Colors.red,           
+                      iconSize: 20.0,
+
+                    ),
+                  ),
+
+                    ],
+                    
+                  ),
                 ),
                 SizedBox(
-              width: 100.0,
+              height: 40.0,
             ),
 
-                Column(                //두번째 사진과 그 아래 영양 정보 있는 박스
-                  children: [
-                    Text(
-                  '치킨'
-                ),
-                SizedBox(
-              height: 50.0,
-            ),
-                Text(
-                  '영양정보'
-                ),
+                Container(
+                   margin: const EdgeInsets.all(15.0),
+                   padding: const EdgeInsets.all(3.0),
+                   decoration: BoxDecoration(
+                   border: Border.all(color: Colors.blueAccent)
+                   ),
 
-                  ],
-                  
-                ),
-                SizedBox(
-              width: 100.0,
+                  child: Row(               //첫번째 사진과 그 아래 영양 정보 있는 박스
+                    children: [
+                      Flexible(
+                        child: Text(
+                    '치킨ㅇㄹㄴㅇㄻㅎㅁㄴㅁㄹㅇㄴ'
+                  ),
+                      ),
+                  SizedBox(
+              width: 50.0,
             ),
-
-                Column(                 //세번째 사진과 그 아래 영양 정보 있는 박스
-                  children: [
-                    Text(
-                  '스테이크'
-                ),
-                SizedBox(
-              height: 50.0,
+                  Container(
+                    child: Column(
+                      children: [
+                        Text(
+                          '칼로리: 1000kcal'
+                        ),
+                        Text(
+                          '탄수화물: 200g'
+                        ),
+                        Text(
+                          '단백질: 150g'
+                        ),
+                        Text(
+                          '지방: 324g'
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+              width: 50.0,
             ),
-                Text(
-                  '영양정보'
-                ),
+                  Container(
+                    child: IconButton(
+                      onPressed: () {
+                        print("liked");
+                      },
+                      icon: Icon(Icons.favorite),
+                      color: Colors.red,           
+                      iconSize: 20.0,
 
-                  ],
-                  
+                    ),
+                  ),
+
+                    ],
+                    
+                  ),
                 ),
+                
 
               ],
             ),

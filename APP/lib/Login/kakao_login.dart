@@ -118,8 +118,16 @@ class _KakaoLoginState extends State<KakaoLogin> {
       );
     } catch (e) {
       print("error on issuing access token: $e");
-    }
-  }
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(        
+            builder: (context) => InputInfo(
+                  additional_text: '개인 맞춤 서비스를 위해\n신체 정보를 꼭 입력해주세요!',
+                  pressed_save_button: 0,
+                )),
+      );
+    } 
+  }  
 
   @override
   Widget build(BuildContext context) {

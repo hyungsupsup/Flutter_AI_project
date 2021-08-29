@@ -41,11 +41,11 @@ class GraphState extends State<DietGraph> {
    if (CalData.length != 0){    //리스트에 데이터가 이미 들어있다면 초기화시키고 새 데이터 추가
     //CalendarPageState.strTypeDaysList.clear();
     for (int i=0; i<=CalendarPageState.strTypeDaysList.length-1; i++){
-      CalData.add(MyNutrition(CalendarPageState.strTypeDaysList[i], random.nextInt(1000)));
+      CalData.add(MyNutrition(CalendarPageState.strTypeDaysList[i], random.nextInt(2000)));
      }
    } else if(CalData.length == 0){
      for (int i=0; i<=CalendarPageState.strTypeDaysList.length-1; i++){
-      CalData.add(MyNutrition(CalendarPageState.strTypeDaysList[i], random.nextInt(1000)));
+      CalData.add(MyNutrition(CalendarPageState.strTypeDaysList[i], random.nextInt(2000)));
      }
    }
    
@@ -58,6 +58,8 @@ class GraphState extends State<DietGraph> {
        domainFn: (MyNutrition nut, _) => nut.date,    //x축
        measureFn: (MyNutrition nut, _) => nut.nutrition,    //y축
        data: CalData,   
+       labelAccessorFn: (MyNutrition nut, _) =>
+              '${nut.nutrition.toString()}'
      ),
 
    ];
@@ -72,6 +74,8 @@ class GraphState extends State<DietGraph> {
       // Add the series legend behavior to the chart to turn on series legends.
       // By default the legend will display above the chart.
       behaviors: [new charts.SeriesLegend()],
+      barRendererDecorator: new charts.BarLabelDecorator<String>(),
+      
       
     );
 }
@@ -106,6 +110,8 @@ class GraphState extends State<DietGraph> {
        domainFn: (MyNutrition nut, _) => nut.date,
        measureFn: (MyNutrition nut, _) => nut.nutrition,
        data: TanData,
+       labelAccessorFn: (MyNutrition nut, _) =>
+              '${nut.nutrition.toString()}'
       //  fillColorFn: (MyNutrition nut, _) {
       //    return MaterialPalette.red.shadeDefault;
       //  },
@@ -116,6 +122,8 @@ class GraphState extends State<DietGraph> {
        domainFn: (MyNutrition nut, _) => nut.date,
        measureFn: (MyNutrition nut, _) => nut.nutrition,
        data: DanData,
+       labelAccessorFn: (MyNutrition nut, _) =>
+              '${nut.nutrition.toString()}'
       //  fillColorFn: (MyNutrition nut, _) {
       //    return MaterialPalette.blue.shadeDefault;
       //  },
@@ -126,6 +134,8 @@ class GraphState extends State<DietGraph> {
        domainFn: (MyNutrition nut, _) => nut.date,
        measureFn: (MyNutrition nut, _) => nut.nutrition,
        data: JiData,
+       labelAccessorFn: (MyNutrition nut, _) =>
+              '${nut.nutrition.toString()}'
       //  fillColorFn: (MyNutrition nut, _) {
       //    return MaterialPalette.green.shadeDefault;
       //  },
@@ -143,9 +153,10 @@ class GraphState extends State<DietGraph> {
     animate: true,
     vertical: true,
     barGroupingType: charts.BarGroupingType.grouped,
-      // Add the series legend behavior to the chart to turn on series legends.
-      // By default the legend will display above the chart.
-      behaviors: [new charts.SeriesLegend()],
+    // Add the series legend behavior to the chart to turn on series legends.
+    // By default the legend will display above the chart.
+    behaviors: [new charts.SeriesLegend()],
+    barRendererDecorator: new charts.BarLabelDecorator<String>(),
   );
 }
 
@@ -202,7 +213,7 @@ class GraphState extends State<DietGraph> {
                   ),
 
                   SizedBox(
-                     height: 20.0,
+                     height: 50.0,
                   ),
 
                   Container(

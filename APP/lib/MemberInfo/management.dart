@@ -67,15 +67,28 @@ class _ManagementState extends State<Management> {
             ),
             Container(
                 child: RaisedButton(
-              child: Text("Logout"),
-              onPressed: () {
-                logOutTalk();    //로그아웃
-                unlinkTalk();    //회원탈퇴
-                storage.delete(key: "login");    //login이라는 키 값을 없애줌 얘도 회원탈퇴 버튼에 넣어야함
+                  child: Text("로그아웃"),
+                  onPressed: () {
+                    logOutTalk();    //로그아웃
+                    //unlinkTalk();    //회원탈퇴
+                    storage.delete(key: "login");    //login이라는 키 값을 없애줌 얘도 회원탈퇴 버튼에 넣어야함
 
-                Navigator.of(context).pop();
-              },
-            ))
+                    Navigator.of(context).pop();
+                  },
+                ),           
+            ),
+            Container(
+                child: RaisedButton(
+                  child: Text("회원탈퇴"),
+                  onPressed: () {
+                    //logOutTalk();    //로그아웃
+                    unlinkTalk();    //회원탈퇴
+                    storage.delete(key: "login");    //login이라는 키 값을 없애줌 얘도 회원탈퇴 버튼에 넣어야함
+
+                    Navigator.of(context).pop();
+                  },
+                ),           
+            ),
           ],
         ),
       ),
