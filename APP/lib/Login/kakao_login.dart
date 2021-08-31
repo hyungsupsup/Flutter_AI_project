@@ -101,11 +101,11 @@ class _KakaoLoginState extends State<KakaoLogin> {
       //post request
 
       //url to send the post request to 
-      final url = 'http://10.0.2.2:5000/user';
+      final url = 'http://10.0.2.2:5000/user';  
       
       print(url);
       //sending a post request to the url
-      final response = await http.post(Uri.parse(url), body: json.encode({'userName': userName}));   
+      final response = await http.post(Uri.parse(url), body: json.encode({'userName': userName}));    // 메일도 추가
       print(response);
 
       Navigator.pushReplacement(
