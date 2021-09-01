@@ -1,10 +1,15 @@
 import 'dart:io';
+import 'package:ai_project/CheckDiet/edit_diet.dart';
 import 'package:ai_project/MemberInfo/management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:group_button/group_button.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ai_project/sub_main.dart';
+import 'package:ai_project/CheckDiet/check_diet.dart';
+import 'package:ai_project/CheckDiet/image_load_button.dart';
+import 'package:ai_project/CheckDiet/edit_diet.dart';
 
 // 식단 추가 작성 페이지 (인공지능에 들어가기 전 페이지)
 class WriteDiet extends StatefulWidget {
@@ -12,14 +17,15 @@ class WriteDiet extends StatefulWidget {
   const WriteDiet({Key? key, required this.food_image}) : super(key: key);         //////////////
 
   @override
-  _WriteDietState createState() => _WriteDietState();
+  WriteDietState createState() => WriteDietState();
 }
 
-class _WriteDietState extends State<WriteDiet> {
+class WriteDietState extends State<WriteDiet> {
   List<String> button_value = ["아침", "점심", "저녁"];
   TextEditingController month_value = TextEditingController();
   TextEditingController day_value = TextEditingController();
   File? new_image; // 다시 선택하기 버튼 누를 때 불러올 이미지 변수
+  static File image4checkdiet = File('file.txt');   //식단조회 페이지로 보낼 이미지 변수   ***null로 만들수 없어서 file.txt넣어둠
 
   Future pickImage(ImageSource imageSource) async {
     try {
@@ -31,6 +37,18 @@ class _WriteDietState extends State<WriteDiet> {
       print('Failed to picl image: $e');
     }
   }
+
+  // Future pickImage2(ImageSource imageSource) async {
+  //   try {
+  //     PickedFile? f = await ImagePicker.platform.pickImage(source: imageSource);
+  //     File img_file = File(f!.path);
+  //     print(img_file);
+  //     setState(() => image4checkdiet = ImageLoadButtonState.image);
+  //     print('이미지 선택 완료');
+  //   } on PlatformException catch (e) {
+  //     print('Failed to picl image: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +78,7 @@ class _WriteDietState extends State<WriteDiet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: Container(
+                child: Container(                  //앨범에서 가져온 사진 띄워지는 곳
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey, width: 1.5),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -255,7 +273,16 @@ class _WriteDietState extends State<WriteDiet> {
                     borderRadius: BorderRadius.circular(30.0),
                     // side: BorderSide(color: Color(0xFF151026), width: 5),
                   ),
-                  onPressed: () {},
+                  onPressed: () {                                    //등록 버튼 눌렀을 때 /predict로 이미지 file AI모델에 전달
+                    print('등록버튼 pressed');
+                    //pickImage2(ImageSource.gallery);
+                    //print('식단조회 페이지에 등록되는 이미지');
+                    //print(new_image);
+                    image4checkdiet= ImageLoadButtonState.image!;
+                    print(image4checkdiet);
+                    change2EditDiet();
+
+                  },                
                   child: const Text(
                     '등록',
                     style: TextStyle(
@@ -272,4 +299,14 @@ class _WriteDietState extends State<WriteDiet> {
       ),
     );
   }
+  change2EditDiet() {
+    Navigator.pushAndRemoveUntil(context,
+      MaterialPageRoute(
+          builder: (BuildContext context) => EditDiet()    
+      
+      ), (route) => false);
+  }
+  
+
+
 }

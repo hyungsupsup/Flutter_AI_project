@@ -4,15 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'add_diet.dart';
+import 'package:ai_project/CheckDiet/add_diet.dart';
 
 class ImageLoadButton extends StatefulWidget {   //카메라 기능이 있는 파일
   const ImageLoadButton({Key? key}) : super(key: key);
 
   @override
-  _ImageLoadButtonState createState() => _ImageLoadButtonState();
+  ImageLoadButtonState createState() => ImageLoadButtonState();
 }
 
-class _ImageLoadButtonState extends State<ImageLoadButton> {
+class ImageLoadButtonState extends State<ImageLoadButton> {
   var renderOverlay = true;
   var visible = true;
   var switchLabelPosition = false;
@@ -24,7 +25,7 @@ class _ImageLoadButtonState extends State<ImageLoadButton> {
   var isDialOpen = ValueNotifier<bool>(false);
   var speedDialDirection = SpeedDialDirection.Up;
   var selectedfABLocation = FloatingActionButtonLocation.endFloat;
-  File? image;
+  static File? image;
 
   Future pickImage(ImageSource imageSource) async {
     try {
@@ -32,6 +33,7 @@ class _ImageLoadButtonState extends State<ImageLoadButton> {
       File img_file = File(f!.path);
       print(img_file);
       setState(() => image = img_file);
+      print('이미지 선택 완료');
     } on PlatformException catch (e) {
       print('Failed to picl image: $e');
     }

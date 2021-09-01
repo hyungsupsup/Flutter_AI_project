@@ -10,6 +10,7 @@ import 'MemberInfo/input_info.dart';
 
 // 조회, 추천, 통계 페이지 전환을 위한 UI
 class SubMain extends StatefulWidget {
+  
   @override
   State<StatefulWidget> createState() {
     return _SubMain();
@@ -18,6 +19,7 @@ class SubMain extends StatefulWidget {
 
 class _SubMain extends State<SubMain> with TickerProviderStateMixin {
   TabController? _tabController;
+  
 
   @override
   void initState() {

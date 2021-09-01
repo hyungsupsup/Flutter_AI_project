@@ -27,6 +27,10 @@ String getSystemTime(){
 
 class _DietRecommendState extends State<DietRecommend> {
   var date = DateTime.now();
+  Color _iconColor1 = Colors.red;
+  Color _iconColor2 = Colors.red;
+  Color _iconColor3 = Colors.red;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +42,7 @@ class _DietRecommendState extends State<DietRecommend> {
       ),
   
       body: Container(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(10.0),
         child: Column(  //최상위 column 박스
 
           children: [
@@ -93,7 +97,7 @@ class _DietRecommendState extends State<DietRecommend> {
                   '저녁에는 이런 음식들 어떠세요?'
                   ),
                 SizedBox(
-              height: 50.0,
+              height: 70.0,
             ),
 
               ],
@@ -126,15 +130,7 @@ class _DietRecommendState extends State<DietRecommend> {
                         Text(
                           '칼로리: 1000kcal'
                         ),
-                        Text(
-                          '탄수화물: 200g'
-                        ),
-                        Text(
-                          '단백질: 150g'
-                        ),
-                        Text(
-                          '지방: 324g'
-                        ),
+                        
                       ],
                     ),
                   ),
@@ -145,9 +141,18 @@ class _DietRecommendState extends State<DietRecommend> {
                     child: IconButton(
                       onPressed: () {
                         print("liked");
+                        setState(() {
+                          if(_iconColor1== Colors.red){
+                            _iconColor1 = Colors.red.shade900;
+                          }else{
+                            _iconColor1 = Colors.red;
+                          }
+                          
+                        });
+                        
                       },
-                      icon: Icon(Icons.favorite),
-                      color: Colors.red,           
+                      icon: Icon(Icons.favorite, color: _iconColor1),
+                                
                       iconSize: 20.0,
 
                     ),
@@ -158,7 +163,7 @@ class _DietRecommendState extends State<DietRecommend> {
                   ),
                 ),
                 SizedBox(
-              height: 40.0,
+              height: 50.0,
             ),
 
                 Container(
@@ -184,15 +189,7 @@ class _DietRecommendState extends State<DietRecommend> {
                         Text(
                           '칼로리: 1000kcal'
                         ),
-                        Text(
-                          '탄수화물: 200g'
-                        ),
-                        Text(
-                          '단백질: 150g'
-                        ),
-                        Text(
-                          '지방: 324g'
-                        ),
+                        
                       ],
                     ),
                   ),
@@ -203,9 +200,18 @@ class _DietRecommendState extends State<DietRecommend> {
                     child: IconButton(
                       onPressed: () {
                         print("liked");
+                        setState(() {
+                          if(_iconColor2== Colors.red){
+                            _iconColor2 = Colors.red.shade900;
+                          }else{
+                            _iconColor2 = Colors.red;
+                          }
+                          
+                        });
+                        
                       },
-                      icon: Icon(Icons.favorite),
-                      color: Colors.red,           
+                      icon: Icon(Icons.favorite, color: _iconColor2),
+                                 
                       iconSize: 20.0,
 
                     ),
@@ -216,7 +222,7 @@ class _DietRecommendState extends State<DietRecommend> {
                   ),
                 ),
                 SizedBox(
-              height: 40.0,
+              height: 50.0,
             ),
 
                 Container(
@@ -230,7 +236,7 @@ class _DietRecommendState extends State<DietRecommend> {
                     children: [
                       Flexible(
                         child: Text(
-                    '치킨ㅇㄹㄴㅇㄻㅎㅁㄴㅁㄹㅇㄴ'
+                    '치킨ㅇㄹㄴㅇㄻㅎㅁㄴㅁㄹㅇㄴdsfasfsf'
                   ),
                       ),
                   SizedBox(
@@ -242,15 +248,7 @@ class _DietRecommendState extends State<DietRecommend> {
                         Text(
                           '칼로리: 1000kcal'
                         ),
-                        Text(
-                          '탄수화물: 200g'
-                        ),
-                        Text(
-                          '단백질: 150g'
-                        ),
-                        Text(
-                          '지방: 324g'
-                        ),
+                        
                       ],
                     ),
                   ),
@@ -261,9 +259,18 @@ class _DietRecommendState extends State<DietRecommend> {
                     child: IconButton(
                       onPressed: () {
                         print("liked");
+                        setState(() {
+                          if(_iconColor3== Colors.red){
+                            _iconColor3 = Colors.red.shade900;
+                          }else{
+                            _iconColor3 = Colors.red;
+                          }
+                          
+                        });
+                        
                       },
-                      icon: Icon(Icons.favorite),
-                      color: Colors.red,           
+                      icon: Icon(Icons.favorite, color: _iconColor3),
+                               
                       iconSize: 20.0,
 
                     ),
