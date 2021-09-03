@@ -1,8 +1,13 @@
+import 'package:ai_project/Class4Flask/dietListDto.dart';
+import 'package:ai_project/Class4Flask/userInfoDto.dart';
+import 'package:ai_project/Login/kakao_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/widgets.dart';
 import '../sub_main.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 // 첫 시작시 회원 정보 입력 받기
 class InputInfo extends StatefulWidget {
@@ -21,6 +26,14 @@ class InputInfo extends StatefulWidget {
 class _InputInfoState extends State<InputInfo> {
   int gender_current_seg = 0;
   int activity_index_current_seg = 0;
+  //String userId = '1';
+  String meal = '4';
+  String created_at = '2021-09-03';
+  String gender = '';
+  String activity = '';
+
+  String cal = '';
+  String img_path = '';
 
   // 사용가자 입력한 값 가져오기 위한 컨트롤러
   TextEditingController member_height = TextEditingController();
@@ -59,7 +72,7 @@ class _InputInfoState extends State<InputInfo> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('회원정보입력'),
+          title: Text('회원정보입력'), 
           backgroundColor: Color(0xFF151026),
         ),
         body: GestureDetector(
@@ -113,7 +126,8 @@ class _InputInfoState extends State<InputInfo> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(13)),
                                   ),
-                                  labelText: 'cm'),
+                                  labelText: 'cm'
+                                  ),
                             ),
                             const SizedBox(
                               height: 20,
@@ -232,13 +246,30 @@ class _InputInfoState extends State<InputInfo> {
                       borderRadius: BorderRadius.circular(30.0),
                       // side: BorderSide(color: Color(0xFF151026), width: 5),
                     ),
-                    onPressed: () {
-                      text_print();
-                      widget.pressed_save_button == 0
-                          ? Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => SubMain()))
-                          : Navigator.of(context).pop();
+                    onPressed: () {                  ////////////// #2으로  users PUT 먼저 하고, if 200일떄 메인화면으로 이동하면서, #7을 호출한다
+                    if(gender_segments[gender_current_seg].toString()=='Text("남자")'){
+                      gender = '2';
+                    }else if(gender_segments[gender_current_seg].toString()=='Text("여자")'){
+                      gender = '1';
+                    }
+
+                    if(activity_index_segments[activity_index_current_seg].toString()=='Text("비활동적")'){
+                      activity = '1';
+
+                    }else if(activity_index_segments[activity_index_current_seg].toString()=='Text("저활동적")'){
+                      activity = '2';
+
+                    }
+                    else if(activity_index_segments[activity_index_current_seg].toString()=='Text("활동적")'){
+                      activity = '3';
+                      
+                    }
+                    else if(activity_index_segments[activity_index_current_seg].toString()=='Text("매우 활동적")'){
+                      activity = '4';
+                      
+                    }
+                      sendUserInfo();   //#2
+                      
                     },
                     child: Text(
                       '저장',
@@ -257,4 +288,80 @@ class _InputInfoState extends State<InputInfo> {
       ),
     );
   }
+
+
+  sendUserInfo() async{   //#2
+   
+    UserInfoDto userInfo = new UserInfoDto(KakaoLoginState.user_id, member_age.value.text.toString(), gender, member_height.value.text.toString(), member_weight.value.text.toString(), activity);
+    var userInfoJson = userInfo.toJson();
+    text_print();
+    print(gender);
+    print(activity);
+    print(userInfoJson);
+
+    final url = 'http://3.38.106.149/users/';
+    print(Uri.parse(url));
+
+    print(url);
+    //sending a post request to the url
+
+    final response = await http.put(Uri.parse(url), body: json.encode(userInfoJson), headers: {'Content-Type':'application/json'});   
+    print('hello1');
+    print(response.body);
+
+    if (response.statusCode==200){
+      Map userMap=jsonDecode(response.body);
+      print(userMap);    //success 떠야함
+      sendMainPage();
+      //String userId = userMap['user_id'].toString();
+      
+      //await storage.write(key: 'userid', value:userId);
+    } 
+  }
+
+ sendMainPage() async{   //#7
+  //#7호출
+  DietListDto dietList = new DietListDto(KakaoLoginState.user_id, created_at, meal);   //2번째 인자에 created_at에 들어갈 날짜 정보 생성해서 넣어야함, meal은 디폴트 값 4
+  var DietListJson = dietList.toJson();
+  print(DietListJson);
+
+  final url = 'http://3.38.106.149/diets/list';
+  print(Uri.parse(url));
+
+  print(url);
+  //sending a post request to the url
+
+  final response = await http.post(Uri.parse(url), body: json.encode(DietListJson), headers: {'Content-Type':'application/json'});   
+  print('hello2');
+  print(response);
+  print(response.body);
+  print('hello3');
+
+  ///////////////////////////////////// 여기에 서버에서 온 값들 변수에 저장해놔야함 #7    
+  Map userMap=jsonDecode(response.body);    //response를 디코딩해서 변수에 저장
+  print(userMap);
+  print('hello4');
+  //diet_list = userMap['diet_list'].toString();
+  cal = userMap['diet_list']['cal'].toString();
+  img_path = userMap['diet_list']['img_path'].toString(); 
+  print(img_path);
+
+
+  widget.pressed_save_button == 0
+  ? Navigator.of(context).pushReplacement(    //서버에서 준 데이터들을 변수에 다 저장한 후, 메인 화면으로 이동
+      MaterialPageRoute(
+          builder: (context) => SubMain()))    //메인화면으로 이동
+  : Navigator.of(context).pop();
+
+
+
+
+  }
+
+  recieveMainPage() async{    // #7 호출하고 데이터들 받고 변수에 저장
+    
+
+  }
+
+
 }
